@@ -35,7 +35,7 @@ function registerByPromise(user) {
   const result = saveDB(user).then(sendEmail).then(getResult);
 
   // 아직 완료되지 않았으므로 지연(pending) 상태
-  console.log(result);
+  console.log(" 상태", result);
   return result;
 }
 
