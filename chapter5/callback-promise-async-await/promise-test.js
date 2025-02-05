@@ -40,6 +40,12 @@ function registerByPromise(user) {
 }
 
 const myUser = { email: "andy@test.com", password: "1234", name: "andy" };
-const result = registerByPromise(myUser);
+// const result = registerByPromise(myUser);
 //  결괏값이 Promise이므로 then() 매서드에 홤수를 넣어서 결과값을 볼 수 있음
-result.then(console.log);
+// result.then(console.log);
+
+// 동시에 여러 프라미스 객체를 호출해 결과값을 받고 싶을때 사용
+// 나열된 순서와 상관없이 다음과 같이 동시에 실행됩니다.
+// 결과는 배열로 반환됩니다.
+allResult = Promise.all([saveDB(myUser), sendEmail(myUser), getResult(myUser)]);
+allResult.then(console.log);
