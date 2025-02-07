@@ -1,45 +1,35 @@
 // 현재 상영영화 순위를 20위까지 보여주는 코드
 // async await 방식으로 변경
 const axios = require("axios");
-const url =
-  "https://raw.githubusercontent.com/wapj/jsbackend/main/movieinfo.json";
 
-axios
-  .get(url)
-  .then((result) => {
-    if (result.status != 200) {
-      throw new Error("요청에 실패했습니다.");
-    }
+async function getTop20Movies() {
+  // await 를 사용하므로 async를 붙임
+  const url =
+    "https://raw.githubusercontent.com/wapj/jsbackend/main/movieinfo.json";
+  try {
+    //네트워크에서 데이터를 받아오므로 await 로 기다림
+    const result = await axios.get(url);
 
-    if (result.data) {
-      // 3. result.data가 있으면 결과를 반환
-      return result.data;
-    }
-
-    throw new Error("데이터 없습니다."); // data가 없으면 에러
-  })
-  .then((data) => {
-    // 4에서 3에서 받은 데이터 처리
+    const { data } = result; // 결과값(result)에는 data 프로퍼티가 있음
+    // data 또는 articleList 없을때 예외 처리
     if (!data.articleList || data.articleList.size == 0) {
-      // 크기가 0이면 에러
       throw new Error("데이터가 없습니다.");
     }
-    return data.articleList; // 영화 리스트 반환
-  })
-  .then((articles) => {
-    return articles.map((article, idx) => {
-      // 영화 리스트를 제목과 순위 정보로 분리
+
+    // data에서 필요한 영화 제목과 순위 정보를 뽑아냄
+    const movieInfos = data.articleList.map((article, idx) => {
       return { title: article.title, rank: idx + 1 };
     });
-  })
-  .then((results) => {
-    for (let movieinfo of results) {
-      // 받은 영화 리스트 정보 출력
-      console.log(`[${movieinfo.rank}위] ${movieinfo.title}`);
+
+    // 데이터 출력
+    for (let movieInfo of movieInfos) {
+      console.log(`[${movieInfo.rank}위] ${movieInfo.title}`);
     }
-  })
-  .catch((err) => {
-    //중간에 발생한 에러들을 여기서 처리
-    console.log("<<에러발생>>");
-    console.error(err);
-  });
+  } catch (err) {
+    // 예외처리
+    throw new Error(err);
+  }
+}
+
+// await를 함수 안에서만 사용 가능하므로 함수를 하나 생성해 실행
+getTop20Movies();
