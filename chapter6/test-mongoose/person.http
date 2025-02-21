@@ -1,0 +1,31 @@
+# mongoose crud 테스트 코드
+
+# 1. server 변수 선언
+@server = http://localhost:3000
+
+### 2. GET 요청 보내기
+GET {{server}}/person
+
+### POST 요청 보내기
+POST {{server}}/person
+Content-Type: application/json
+
+{
+    "name": "super Man",
+    "age": 400,
+    "email": "superman@mail.com"
+}
+
+### 4. 생성한 문서 확인
+GET {{server}}/person/superman@mail.com
+
+### 5. PUT 요청 보내기. 문서 수정하기
+PUT {{server}}/person/superman@mail.com
+Content-Type: application/json
+
+{
+    "age": 500
+}
+
+### 6. 문서 삭제하기
+DELETE {{server}}/person/superman@mail.com

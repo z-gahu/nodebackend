@@ -28,6 +28,7 @@ app.listen(3000, async () => {
 // 모든 person 데이터 출력
 app.get("/person", async (req, res) => {
   const person = await Person.find({});
+  console.log("person 조회");
   res.send(person);
 });
 
