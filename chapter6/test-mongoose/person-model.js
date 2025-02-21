@@ -9,4 +9,4 @@ const personSchema = new Schema({
   email: { type: String, required: true },
 });
 
-module.exports = mongoose.model("Person", personSchema); // 모델 객체 생성
+module.exports = mongoose.model("Person", personSchema); // 모델 객체 생성 => 복수형인 people가 생성된다.
