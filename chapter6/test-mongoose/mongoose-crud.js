@@ -46,7 +46,7 @@ app.post("/person", async (req, res) => {
 });
 
 // person 데이터 수정하기
-app.post("/person/:email", async (req, res) => {
+app.put("/person/:email", async (req, res) => {
   const person = await Person.findOneAndUpdate(
     { email: req.params.email },
     { $set: req.body },
