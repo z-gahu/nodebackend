@@ -9,7 +9,10 @@ app.set("views", __dirname + "/views"); //3. 뷰 디렉터리를 views로 설정
 
 // 4. 라우터 설정
 app.get("/", (req, res) => {
-  res.render("home", { title: "안녕하세요", message: "만나서 반값습니다.!" });
+  res.render("home", {
+    title: "테스트 게시판",
+    message: "만나서 반값습니다.!",
+  });
 });
 
 app.listen(3000);
