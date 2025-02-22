@@ -1,6 +1,6 @@
 // 게시판 프로젝트의 app.js
 const express = require("express");
-const handlerbars = require("express-handlerbars");
+const handlerbars = require("express-handlebars");
 const app = express();
 
 app.engine("handlebars", handlerbars.engine()); // 1. 템플릿 엔진으로 핸들바 등록
