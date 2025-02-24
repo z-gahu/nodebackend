@@ -3,7 +3,10 @@ const express = require("express");
 const handlerbars = require("express-handlebars");
 const app = express();
 
-// 몽고디비 연결 함수수
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); //req.body와 POST를 요청을 해석하기 위한 설정
+
+// 몽고디비 연결 함수
 const mongodbConnection = require("./configs/mongodb-connection");
 
 app.engine(
