@@ -6,7 +6,7 @@ async function writePost(collection, post) {
   return await collection.insertOne(post); // 몽고디비에 post저장 후 결과 반환
 }
 
-module.export = {
+module.exports = {
   // require()로 파일을 임포트시 외부로 노출하는 객체
-  wirtePost,
+  writePost,
 };

@@ -1,6 +1,7 @@
 // 게시판 프로젝트의 app.js
 const express = require("express");
 const handlerbars = require("express-handlebars");
+const postService = require("./services/post-service"); // 서비스 파일 로딩
 const app = express();
 
 app.use(express.json());
@@ -28,6 +29,16 @@ app.get("/", (req, res) => {
 
 app.get("/write", (req, res) => {
   res.render("write", { title: "테스트 게시판" });
+});
+
+//글쓰기
+app.post("/write", async (req, res) => {
+  const post = req.body;
+  //글쓰기후 결과 반환
+  const result = await postService.writePost(collection, post);
+
+  // 생성된 도큐먼트의 _id를 사용해 상세베이지로 이동
+  res.redirect(`/detail/${result.insertedId}`);
 });
 
 app.get("/detail/:id", async (req, res) => {
