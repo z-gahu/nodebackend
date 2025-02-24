@@ -8,11 +8,9 @@ const mongodbConnection = require("./configs/mongodb-connection");
 
 app.engine(
   "handlebars",
-  handlerbars
-    .create({
-      helpers: require("./configs/handlebars-helpers"),
-    })
-    .engine()
+  handlerbars.create({
+    helpers: require("./configs/handlebars-helpers"),
+  }).engine
 ); // 1. 템플릿 엔진으로 핸들바 등록
 app.set("view engine", "handlebars"); // 2. 웹페이지 로드 시 사용할 템플릿 엔진 설정
 app.set("views", __dirname + "/views"); //3. 뷰 디렉터리를 views로 설정
