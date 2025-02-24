@@ -4,7 +4,7 @@ const handlerbars = require("express-handlebars");
 const app = express();
 
 // 몽고디비 연결 함수수
-const mongodConnection = require("./configs/mongodb-connection");
+const mongodbConnection = require("./configs/mongodb-connection");
 
 app.engine(
   "handlebars",
@@ -39,7 +39,7 @@ let collection;
 app.listen(3000, async () => {
   console.log("Server started");
   // mongodbConnection() 의 결과는 mongoClient
-  const mongoClient = await mongodConnection();
+  const mongoClient = await mongodbConnection();
 
   // mongodbClient.db()로 디비 선택 collection() 으로 컬렉션 선택 후 collection에 할당
   collection = mongoClient.db().collection("post");
