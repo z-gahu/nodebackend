@@ -51,9 +51,17 @@ async function getDetailPost(collection, id) {
   );
 }
 
+async function getPostByIdAndPassword(collection, { id, password }) {
+  return await collection.findOne(
+    { _id: ObjectId(id), password: password },
+    projectionOption
+  );
+}
+
 module.exports = {
   // require()로 파일을 임포트시 외부로 노출하는 객체
   list,
   writePost,
   getDetailPost,
+  getPostByIdAndPassword,
 };
