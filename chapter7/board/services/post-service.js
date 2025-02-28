@@ -58,10 +58,27 @@ async function getPostByIdAndPassword(collection, { id, password }) {
   );
 }
 
+// id로 데이터 불러오기
+async function getPostById(collection, id) {
+  return await collection.findOne({ _id: ObjectId(id) }, projectionOption);
+}
+
+// 게시글 수정
+async function updatePost(collection, id, post) {
+  const toUpdatePost = {
+    $set: {
+      ...post,
+    },
+  };
+  return await collection.updateOne({ _id: ObjectId(id) }, toUpdatePost);
+}
+
 module.exports = {
   // require()로 파일을 임포트시 외부로 노출하는 객체
   list,
   writePost,
   getDetailPost,
   getPostByIdAndPassword,
+  getPostById,
+  updatePost,
 };
