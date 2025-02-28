@@ -35,7 +35,7 @@ async function list(collection, page, search) {
 // 패스워드는 노출 할 필요가 없으므로 결과값을 가져오지 않음
 const projectionOption = {
   projection: {
-    // 프로젝션(투영) 결과값에서 일부만 가져올 때 사용
+    // 프로젝션(투영) 결과값에서 일부만 가져올 때 사용-> 데이터 베이스에서 필요한 필드만 선택해서 가져오는것
     password: 0,
     "comments.password": 0,
   },

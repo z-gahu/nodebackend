@@ -60,6 +60,7 @@ app.post("/write", async (req, res) => {
 app.get("/detail/:id", async (req, res) => {
   // 게시글 정보 가져오기
   const result = await postService.getDetailPost(collection, req.params.id);
+  console.log("!+================result", result.value);
   res.render("detail", {
     title: "테스트 게시판",
     post: result.value,
