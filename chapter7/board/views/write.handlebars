@@ -1,27 +1,43 @@
-<h1>[{{title}}]</h1>
+<!-- mode에 따라 문구 변경-->
+<h1>[{{title}} 글 {{#if (eq mode "create")}} 작성 {{else}} 수정 {{/if}}]</h1>
 <div>
+  <!-- mode  에 따라 폼이 반영되는 URL변경-->
   <!-- 1. 글쓰기 폼 -->
-  <form name="boardForm" method="post" action="/write">
+  <form name="boardForm" method="post" 
+  {{#if (eq mode "create") }}
+  action="/write"
+  {{else}}
+  action="/modify"
+  {{/if}}>
     <div>
       <!-- 제목 입력 칸 -->
+      <!-- 수정 모드 일때는 id값을 폼을 통해 전송 -->
+      {{#if (eq mode "modify")}}
+      <input type="hidden" name="id" value="{{post._id}}" />
+      {{/if}}
+
+      <!-- 수정 모드인 경우 제목 넣어주기-->
       <label>제목</label>
       <input
         type="text"
         name="title"
         placeholder="제목을 넣어주세요"
-        value=""
+        value="{{post.title}}"
       />
 
     </div>
     <div>
+      <!-- 수정모드인 경우 이름을 넣기 -->
       <!-- 이름 입력 칸 -->
       <label>이름</label>
-      <input type="text" name="name" placeholder="이름을 넣어주세요" value="" />
+      <input type="text" name="name" placeholder="이름을 넣어주세요" 
+      value="{{post.name}}" 
+      />
 
     </div>
     <div>
       <!-- 비밀번호 입력 칸 -->
-      <label>비밀번호호</label>
+      <label>비밀번호</label>
       <input
         type="password"
         name="password"
@@ -32,6 +48,7 @@
     <div>
 
       <!-- 본문 입력 -->
+      <!-- 수정 모드인 경우 본문에 내용을 채우기 -->
       <label>본문을 입력하세요</label>
       <br />
       <textarea
@@ -39,7 +56,9 @@
         placeholder="본문"
         cols="50"
         rows="10"
-      ></textarea>
+      >
+      {{post.content}}
+      </textarea>
       <br />
 
       <!-- 버튼 영역 -->
