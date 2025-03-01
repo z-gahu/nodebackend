@@ -111,6 +111,38 @@ app.delete("/delete", async (req, res) => {
   }
 });
 
+// 댓글 추가
+app.post("/write-comment", async (req, res) => {
+  const { id, name, password, comment } = req.body;
+  const post = await postService.getPostById(collection, id); // id로 게시글 정보 가져오기
+
+  // 게시글에 기존 댓글 리스트가 있으면 추가
+  if (post.comments) {
+    post.comments.push({
+      idx: post.comments.length + 1,
+      name,
+      password,
+      comment,
+      createdDt: new Date().toISOString(),
+    });
+  } else {
+    // 게시글에 댓글 정보가 없으면 리스트에 댓글 정보 추가
+    post.comments = [
+      {
+        idx: 1,
+        name,
+        password,
+        comment,
+        createdDt: new Date().toISOString(),
+      },
+    ];
+  }
+
+  // 업데이트하기. 업데이트 후에는 상세 페이지로 다시 리다이렉트
+  postService.updatePost(collection, id, post);
+  return res.redirect(`/detail/${id}`);
+});
+
 // 상세피이지로 이동
 app.get("/detail/:id", async (req, res) => {
   // 게시글 정보 가져오기
