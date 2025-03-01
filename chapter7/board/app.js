@@ -9,6 +9,7 @@ app.use(express.urlencoded({ extended: true })); //req.body와 POST를 요청을
 
 // 몽고디비 연결 함수
 const mongodbConnection = require("./configs/mongodb-connection");
+const { ObjectId } = require("mongodb");
 
 app.engine(
   "handlebars",
@@ -85,6 +86,29 @@ app.post("/modify/", async (req, res) => {
   //업데이트 결과
   const result = postService.updatePost(collection, id, post);
   res.redirect(`/detail/${id}`);
+});
+
+// 게시글 삭제
+app.delete("/delete", async (req, res) => {
+  const { id, password } = req.body;
+  try {
+    // collection 의 deleteOne을 사용해 게시글 하나를 삭제
+    const result = await collection.deleteOne({
+      _id: ObjectId(id),
+      password: password,
+    });
+
+    // 삭제 결과가 잘못된 경우 처리
+    if (result.deleteCount !== 1) {
+      console.log("삭제 실패");
+      return res.json({ isSuccess: false });
+    }
+    return res.json({ isSuccess: true });
+  } catch (error) {
+    // 에러가 난 경우의 처리
+    console.log(error);
+    return res.json({ isSuccess: false });
+  }
 });
 
 // 상세피이지로 이동
