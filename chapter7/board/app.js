@@ -56,6 +56,37 @@ app.post("/write", async (req, res) => {
   res.redirect(`/detail/${result.insertedId}`);
 });
 
+// 쓰기 페이지 이동 mode: create
+app.get("/write", (req, res) => {
+  res.render("write", { title: "테스트 게시판", mode: "create" });
+});
+
+// 수정페이지 이동 mode: modify
+app.get("/modify/:id", async (req, res) => {
+  const { id } = req.params.id;
+
+  // getPostById() 함수로 게시글 데이터를 받아옴
+  const post = await postService.getPostById(collection, req.params.id);
+  console.log("수정페이지정보", post);
+  res.render("write", { title: "테스트 게시판", mode: "modify", post });
+});
+
+// 게시글 수정 api
+app.post("/modify/", async (req, res) => {
+  const { id, title, name, password, content } = req.body;
+
+  const post = {
+    title,
+    name,
+    password,
+    content,
+    createDt: new Date().toISOString(),
+  };
+  //업데이트 결과
+  const result = postService.updatePost(collection, id, post);
+  res.redirect(`/detail/${id}`);
+});
+
 // 상세피이지로 이동
 app.get("/detail/:id", async (req, res) => {
   // 게시글 정보 가져오기
