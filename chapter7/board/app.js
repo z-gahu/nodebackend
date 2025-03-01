@@ -144,9 +144,8 @@ app.post("/write-comment", async (req, res) => {
 });
 
 // 댓글 삭제
-app.post("/delete-comment", async (req, res) => {
+app.delete("/delete-comment", async (req, res) => {
   const { id, password, idx } = req.body;
-
   // 게시글(post)의 comments안에 있는 특정 댓글 데이터를 찾기
   const post = await collection.findOne(
     {
@@ -155,7 +154,7 @@ app.post("/delete-comment", async (req, res) => {
     },
     postService.projectionOption
   );
-
+  console.log("포스트 확인", post);
   // 데이터가 없으면 isSuccess: false 를 주면서 종료
   if (!post) {
     return res.json({ isSuccess: false });
