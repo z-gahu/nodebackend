@@ -80,7 +80,7 @@ app.post("/modify/", async (req, res) => {
     name,
     password,
     content,
-    createDt: new Date().toISOString(),
+    createdDt: new Date().toISOString(),
   };
   //업데이트 결과
   const result = postService.updatePost(collection, id, post);
